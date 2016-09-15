@@ -481,7 +481,7 @@ def generate_report():
 	if "DHE" not in cipher_suites[cipher_id]['name']:
 		notFound = True
 
-    if notFound == True: print '[!!] Warning The Server Does not support Forward Secrecy!!!'	
+    if notFound == True: print '[!!] Warning The Server does not support Perfect Forward Secrecy!!!'	
 
 def scan_fuzz_ciphers(host,port,handshakes):
     print "[*] Fuzzing %s:%d for all possible cipher suite identifiers." % (host, port)
