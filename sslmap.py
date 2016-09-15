@@ -475,6 +475,13 @@ def generate_report():
         for cipher_id in results[classification]:
             print "%s" % (cipher_suites[cipher_id]['name'])
         print ""
+	
+    notFound = False
+    for cipher_id in results[classification]:
+	if "DHE" not in cipher_suites[cipher_id]['name']:
+		notFound = True
+
+    if notFound == True: print '[!!] Warning The Server Does not support Forward Secrecy!!!'	
 
 def scan_fuzz_ciphers(host,port,handshakes):
     print "[*] Fuzzing %s:%d for all possible cipher suite identifiers." % (host, port)
@@ -488,9 +495,12 @@ def scan_known_ciphers(host,port,handshakes):
     print "[*] Scanning %s:%d for %d known cipher suites." % (host,port,len(cipher_suites))
     for handshake in handshakes:
         if verbose: print "[*] Using %s handshake." % handshake
-        for cipher_id in cipher_suites.keys():
-            if check_cipher(cipher_id,host,port,handshake): print_cipher(cipher_id)
+        
+	for cipher_id in cipher_suites.keys():
+            if check_cipher(cipher_id,host,port,handshake): 
+		print_cipher(cipher_id)
 
+	
 if __name__ == '__main__':
     print """
 	         _                       
